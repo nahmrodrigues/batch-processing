@@ -1,20 +1,28 @@
-package com.example.batchprocessing;
+package com.example.batchprocessing.domain;
 
-public class Person {
+import java.io.Serializable;
 
-    private String lastName;
+public class Person implements Serializable {
+
+    private String id;
     private String firstName;
+    private String lastName;
 
     public Person() {
     }
 
-    public Person(String firstName, String lastName) {
+    public Person(String id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -31,7 +39,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "firstName: " + firstName + ", lastName: " + lastName;
+        return "id: " + id + "firstName: " + firstName + ", lastName: " + lastName;
     }
 
 }

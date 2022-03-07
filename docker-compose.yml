@@ -1,0 +1,12 @@
+version: '2'
+# arquivo com dependências do projeto a serem usadas durante o desenvolvimento
+# As dependências neste arquivo devem estar compatíveis com as dependências dos ambientes
+# para evitar o problema "funciona na minha máquina"
+
+services:
+  redis:
+    image: bitnami/redis:6.2.0-debian-10-r4
+    environment:
+      REDIS_PASSWORD: redis123456
+    ports:
+      - "6379:6379"

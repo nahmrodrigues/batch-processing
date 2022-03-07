@@ -1,5 +1,7 @@
 package com.example.batchprocessing;
 
+import com.example.batchprocessing.domain.Person;
+import com.example.batchprocessing.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
@@ -14,23 +16,40 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
     private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
 
-    private final JdbcTemplate jdbcTemplate;
+//    private final JdbcTemplate jdbcTemplate;
+//
+//    @Autowired
+//    public JobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
+//        this.jdbcTemplate = jdbcTemplate;
+//    }
+//
+//    @Override
+//    public void afterJob(JobExecution jobExecution) {
+//        if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
+//            log.info("!!! JOB FINISHED! Time to verify the results");
+//
+//            jdbcTemplate.query("SELECT first_name, last_name FROM people",
+//                    (rs, row) -> new Person(
+//                            rs.getString(1),
+//                            rs.getString(2),
+//                            rs.getString(3))
+//            ).forEach(person -> log.info("Found <" + person + "> in the database."));
+//        }
+//    }
+
+
+    private final PersonRepository personRepository;
 
     @Autowired
-    public JobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public JobCompletionNotificationListener(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     @Override
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("!!! JOB FINISHED! Time to verify the results");
-
-            jdbcTemplate.query("SELECT first_name, last_name FROM people",
-                    (rs, row) -> new Person(
-                            rs.getString(1),
-                            rs.getString(2))
-            ).forEach(person -> log.info("Found <" + person + "> in the database."));
+            personRepository.getAll().forEach((key, person) -> log.info("Found " + key + " <" + person + "> in the database."));
         }
     }
 }
