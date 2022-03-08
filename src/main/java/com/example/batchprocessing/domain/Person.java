@@ -17,8 +17,16 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getId() {
@@ -31,10 +39,6 @@ public class Person implements Serializable {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override

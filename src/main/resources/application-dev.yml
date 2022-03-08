@@ -1,1 +1,7 @@
-
+app:
+  conf:
+    datasource:
+      redis:
+        host: ${db.redis.host}
+        port: 6379
+        password: ${db.redis.password}
